@@ -18,10 +18,6 @@ This distinction is important because the original project involved multiple con
 
 The wider project connected CT-derived specimen data to numerical fracture analysis. The complete team workflow included work on CT preprocessing and material characterization, simulation-boundary preparation, Finite Cell Method (FCM) boundary-condition handling, JSON-driven simulation configuration, and phase-field fracture simulation.
 
-The full collaborative context is documented in:
-
-`docs/Img2Frac_final_presentation.pdf`
-
 ## My Contribution to the Original Project
 
 My work focused primarily on the interface between **CT-derived image data** and **simulation-ready boundary inputs**.

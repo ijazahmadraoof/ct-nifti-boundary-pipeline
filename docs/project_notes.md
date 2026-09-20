@@ -2,7 +2,7 @@
 
 This file is a lightweight development record for the public portfolio reconstruction.
 
-It is not intended to replace the final academic presentation or the individual contribution summary.
+It complements `contribution_summary.md`, which documents my role in the original collaborative university project and distinguishes it from the later independent portfolio implementation.
 
 ## Goals
 

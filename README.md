@@ -23,7 +23,6 @@ For more detail:
 - [Individual contribution summary](docs/contribution_summary.md)
 - [Development notes](docs/project_notes.md)
 - [Attribution and project context](ATTRIBUTION.md)
-- [Final academic presentation](docs/Img2Frac_final_presentation.pdf)
 
 ## What the Pipeline Does
 
@@ -243,7 +242,6 @@ ct-nifti-boundary-pipeline/
 │   │   ├── segmentation_histogram.png
 │   │   ├── segmentation_slices.png
 │   │   └── stl_preview.png
-│   ├── Img2Frac_final_presentation.pdf
 │   ├── contribution_summary.md
 │   └── project_notes.md
 ├── examples/
