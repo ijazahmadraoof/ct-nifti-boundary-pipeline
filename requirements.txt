@@ -1,4 +1,2 @@
-# Runtime dependencies will be added incrementally as the clean portfolio
-# implementation is developed.
-#
-# Add only packages that are actually imported by the public implementation.
+numpy==2.5.3
+nibabel==5.4.2
