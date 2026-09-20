@@ -1,146 +1,166 @@
 # Individual Contribution Summary
 
-## Project Context
+## Purpose of This Document
 
-This repository represents my individual contribution within a larger
-research-oriented group project.
+This document separates two things clearly:
 
-The overall project involved preparing CT-derived data for
-simulation-oriented workflows. Different team members contributed to
-different components of the complete workflow.
+1. my contribution to the original collaborative university project, and
+2. the additional work completed later for this independent public portfolio reconstruction.
 
-My main focus was the development of a CT NIfTI processing and boundary
-extraction workflow.
+This distinction is important because the original project involved multiple contributors and an existing research software environment.
 
-------------------------------------------------------------------------
+## Original University Project
 
-# My Contribution
+**Project:** Development of an Image-to-Analysis Pipeline for the Modeling of Fracture Processes  
+**Program:** M.Sc. Digital Engineering  
+**Institution:** Bauhaus-Universität Weimar  
+**Project type:** Collaborative 12-ECTS research project
 
-## 1. NIfTI Volume Handling
+The wider project connected CT-derived specimen data to numerical fracture analysis. The complete team workflow included work on CT preprocessing and material characterization, simulation-boundary preparation, Finite Cell Method (FCM) boundary-condition handling, JSON-driven simulation configuration, and phase-field fracture simulation.
 
-Implemented and documented workflows for:
+The full collaborative context is documented in:
 
--   loading CT-derived NIfTI volumes
--   inspecting volume dimensions
--   analysing voxel spacing
--   reading affine transformations
--   checking orientation information
+`docs/Img2Frac_final_presentation.pdf`
 
-Main files:
+## My Contribution to the Original Project
 
--   `src/ct_pipeline/io.py`
--   `examples/01_inspect_nifti.py`
+My work focused primarily on the interface between **CT-derived image data** and **simulation-ready boundary inputs**.
 
-------------------------------------------------------------------------
+### CT/NIfTI preprocessing workflow
 
-## 2. Preprocessing Workflow
+I worked with the preprocessing workflow required to prepare CT-derived NIfTI data for simulation handover, including:
 
-Developed preprocessing steps required before geometry extraction:
+- cropping concepts and region isolation
+- orientation and reorientation
+- voxel spacing and physical-coordinate awareness
+- alignment between the prepared NIfTI, exported STL surfaces, and the solver domain
 
--   cropping volumetric regions
--   maintaining spatial consistency
--   converting volumes into canonical RAS orientation
+I did **not** develop the complete preprocessing GUI from scratch. My role required understanding and working with the existing preprocessing environment so that downstream boundary extraction remained coordinate-consistent.
 
-Main files:
+### Directional boundary-surface extraction
 
--   `src/ct_pipeline/preprocessing.py`
--   `examples/03_crop_and_reorient.py`
+A central part of my contribution was the boundary-condition surface workflow:
 
-------------------------------------------------------------------------
+1. select a local region of interest
+2. create or use a material/void threshold mask
+3. choose a direction (`+X`, `-X`, `+Y`, `-Y`, `+Z`, or `-Z`)
+4. identify material voxels with an empty neighbour in that direction
+5. convert each exposed square voxel face into two triangles
+6. transform voxel-face corners into physical coordinates
+7. export the selected surface as STL geometry
 
-## 3. Coordinate-Aware Geometry Processing
+This allowed boundary-condition surfaces to be derived directly from the CT/NIfTI geometry rather than being created manually in a potentially inconsistent coordinate system.
 
-Implemented coordinate handling between:
+### ROI and cleanup controls
 
--   voxel index space
--   physical coordinate space
+The original workflow included controls for:
 
-Important for ensuring that extracted geometry represents the correct
-physical location.
+- directional face selection
+- local percentage-based X/Y/Z ranges
+- threshold settings
+- surface-band filtering
+- largest-component cleanup
 
-Main files:
+These controls supported the extraction of local load/support markers rather than every material/void interface in the volume.
 
--   `src/ct_pipeline/coordinates.py`
+### STL and metadata handover
 
-------------------------------------------------------------------------
+I contributed to the handover from image processing to simulation by working on:
 
-## 4. CT Material Segmentation
+- boundary STL export
+- physical-coordinate consistency
+- metadata/JSON-based handover
+- validation of exported boundary surfaces
 
-Implemented intensity-based segmentation workflow:
+The intended outputs from this stage were:
 
--   intensity analysis
--   Otsu threshold estimation
--   material mask generation
+- preprocessed NIfTI geometry
+- boundary STL markers for loads/supports
+- export metadata / JSON for the downstream simulation workflow
 
-Main files:
+### Validation
 
--   `src/ct_pipeline/segmentation.py`
--   `examples/05_segment_real_cube.py`
+The validation approach included checking:
 
-------------------------------------------------------------------------
+- visual alignment of the STL with the selected CT surface
+- coordinate bounds
+- intended direction
+- downstream solver intersection
 
-## 5. Boundary Patch Extraction
+The key engineering idea was that a surface that merely looks correct is not sufficient; the geometry also needs to be consistent with the NIfTI coordinate system and usable by the simulation.
 
-Developed the workflow for extracting directional boundary regions.
+### Software collaboration
 
-Implemented:
+I worked within an existing collaborative software environment and contributed through Git/GitLab branches rather than developing the complete research codebase independently.
 
--   directional boundary selection
--   region-of-interest restriction
--   surface-band extraction
--   connected component selection
+## What I Did Not Claim
 
-Main files:
+The original project contained significant work outside my individual contribution.
 
--   `src/ct_pipeline/selection.py`
--   `src/ct_pipeline/boundary.py`
+I do **not** claim to have developed:
 
-------------------------------------------------------------------------
+- the complete CT-analysis GUI
+- the complete raw-CT correction workflow
+- the complete pore/material characterization workflow
+- the FCM solver
+- the phase-field fracture formulation
+- the full C++ simulation system
+- the complete end-to-end university research codebase
 
-## 6. Surface Reconstruction and STL Export
+Those components formed part of the broader collaborative project.
 
-Converted selected boundary voxels into physical-space surface
-triangles.
+## Independent Portfolio Reconstruction
 
-Implemented:
+This public repository was rebuilt independently to demonstrate and strengthen the concepts related to my original contribution.
 
--   exposed voxel face detection
--   triangle generation
--   STL writing
--   geometry validation
+The portfolio implementation adds several components that should be understood as **new portfolio engineering work**, not necessarily one-to-one reproductions of what I implemented during the university project.
 
-Main files:
+### Portfolio-specific additions
 
--   `src/ct_pipeline/surface.py`
--   `src/ct_pipeline/stl_export.py`
+The reconstruction includes:
 
-------------------------------------------------------------------------
+- a synthetic T-shaped NIfTI specimen with known spacing, origin, qform, sform, and millimetre units
+- reusable NIfTI inspection utilities
+- explicit voxel-to-physical and physical-to-voxel coordinate functions
+- geometry-preserving cropping
+- canonical RAS reorientation utilities
+- Otsu threshold estimation for the local CT diagnostic
+- directional exposed-face detection
+- fractional ROI selection
+- surface-band filtering
+- connected-component filtering
+- standalone physical-space triangulation
+- standalone ASCII STL export
+- JSON metadata generation
+- automated boundary-geometry validation
+- automated tests
+- public synthetic examples
+- local real-data validation examples
+- portfolio documentation
 
-## 7. Validation and Documentation
+## How the Portfolio Code Maps to the Contribution
 
-Added:
+| Engineering concern | Portfolio modules |
+|---|---|
+| NIfTI loading and spatial inspection | `src/ct_pipeline/io.py` |
+| Voxel / physical coordinates | `src/ct_pipeline/coordinates.py` |
+| Cropping and reorientation | `src/ct_pipeline/preprocessing.py` |
+| Material mask creation | `src/ct_pipeline/segmentation.py` |
+| Directional exposed-face detection | `src/ct_pipeline/boundary.py` |
+| ROI / surface-band / component selection | `src/ct_pipeline/selection.py` |
+| Physical-space triangle generation | `src/ct_pipeline/surface.py` |
+| STL export | `src/ct_pipeline/stl_export.py` |
+| JSON handover metadata | `src/ct_pipeline/metadata.py` |
+| Geometry checks | `src/ct_pipeline/validation.py` |
+| Diagnostic figures | `src/ct_pipeline/visualization.py` |
+| Public reproducible demonstration | `examples/07_full_synthetic_pipeline.py` |
 
--   automated geometry validation
--   metadata generation
--   reproducible example scripts
--   project documentation
+## One-Sentence Interview Summary
 
-Main files:
+> In the original collaborative project, I worked mainly on the CT/NIfTI-to-simulation handover: understanding preprocessing and coordinate consistency, extracting directional boundary-condition surfaces from voxel data, exporting them as STL markers, and supporting metadata and validation for downstream simulation; this GitHub repository independently rebuilds those ideas in a smaller, tested Python package.
 
--   `src/ct_pipeline/validation.py`
--   `src/ct_pipeline/metadata.py`
--   `tests/`
+## Short Interview Version
 
-------------------------------------------------------------------------
+If asked, "What did you personally do?", a concise answer is:
 
-# Engineering Skills Demonstrated
-
--   Scientific Python development
--   CT image processing
--   NIfTI data handling
--   Coordinate transformations
--   Computational geometry
--   Simulation preprocessing
--   Software structuring
--   Automated testing
--   Reproducible workflows
+> My contribution was mainly between the CT data and the solver. I worked with the NIfTI preprocessing workflow, had to keep voxel and physical coordinates consistent, and developed the logic for selecting a local directional surface from the CT volume and exporting it as an STL boundary marker. I also worked on the metadata/JSON handover and validation inside the existing research software workflow. I did not develop the complete fracture solver or the entire GUI. The GitHub project is my independent reconstruction of that part, with additional tests and reproducible examples.
