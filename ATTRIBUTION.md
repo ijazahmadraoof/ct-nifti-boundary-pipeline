@@ -24,7 +24,7 @@ including:
 - STL generation
 - metadata preparation for numerical-simulation handover
 
-The implementation in this repository is being reconstructed independently for
+The implementation in this repository was reconstructed independently for
 educational and portfolio purposes.
 
 Original research datasets and private project material are not distributed

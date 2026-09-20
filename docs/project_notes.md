@@ -259,7 +259,7 @@ Future changes should be limited to maintenance, documentation improvements, or 
 
 ## Optional Future Extensions
 
-Possible extensions, if they become useful for a specific research or job requirement:
+Possible extensions, if they become useful for a specific engineering or research requirement:
 
 - interactive 3D visualization
 - an optional lightweight GUI

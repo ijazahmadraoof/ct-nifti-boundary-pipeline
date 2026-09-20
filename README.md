@@ -346,5 +346,5 @@ The repository currently does not include a software license granting reuse of t
 
 **Ijaz Ahmad Raoof**
 
-M.Sc. Digital Engineering  
+Master's Student in Digital Engineering  
 Bauhaus-Universität Weimar
