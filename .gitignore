@@ -1,4 +1,4 @@
-# Python cache
+# Python bytecode and caches
 __pycache__/
 *.py[cod]
 *$py.class
@@ -11,28 +11,53 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
-# IDE
+# IDE / editor settings
 .vscode/
+.idea/
 
-# OS files
+# OS-generated files
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Build files
+# Python packaging / build output
 build/
 dist/
 *.egg-info/
+.eggs/
 
-# Data files
+# Test / coverage output
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+~$*
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+
+# Large or private scientific data
 *.nii
 *.nii.gz
 *.npy
+*.npz
+*.dcm
 
-# Large outputs
+# Generated geometry / simulation outputs
 *.stl
 *.vtk
 *.vtu
+*.pvtu
 
-# Temporary files
-*.tmp
-*.log
+# Local result folders that may contain generated output
+results/*
+!results/.gitkeep
+
+# Keep repository placeholders
+!.gitkeep

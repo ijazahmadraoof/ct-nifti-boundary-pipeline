@@ -1,6 +1,4 @@
-numpy
-scipy
-nibabel
-matplotlib
-pyvista
-numpy-stl
+# Runtime dependencies will be added incrementally as the clean portfolio
+# implementation is developed.
+#
+# Add only packages that are actually imported by the public implementation.
