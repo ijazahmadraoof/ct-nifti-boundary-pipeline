@@ -1,22 +1,22 @@
-# Individual Contribution Summary
+# Contribution and Scope
 
-## Purpose of This Document
+## Purpose
 
-This document separates two things clearly:
+This document clarifies:
 
-1. my contribution to the original collaborative university project, and
-2. the additional work completed later for this independent public portfolio reconstruction.
+1. the scope of my contribution to the original collaborative university project, and
+2. the additional work implemented later in this independent public portfolio reconstruction.
 
-This distinction is important because the original project involved multiple contributors and an existing research software environment.
+The distinction is important because the original project involved multiple contributors and an existing research software environment.
 
-## Original University Project
+## Original Collaborative Project
 
 **Project:** Development of an Image-to-Analysis Pipeline for the Modeling of Fracture Processes  
 **Program:** M.Sc. Digital Engineering  
 **Institution:** Bauhaus-Universität Weimar  
 **Project type:** Collaborative 12-ECTS research project
 
-The wider project connected CT-derived specimen data to numerical fracture analysis. The complete team workflow included work on CT preprocessing and material characterization, simulation-boundary preparation, Finite Cell Method (FCM) boundary-condition handling, JSON-driven simulation configuration, and phase-field fracture simulation.
+The broader collaborative project included work on CT preprocessing and material characterization, simulation-boundary preparation, Finite Cell Method (FCM) boundary-condition handling, JSON-driven simulation configuration, and phase-field fracture simulation.
 
 ## My Contribution to the Original Project
 
@@ -31,7 +31,7 @@ I worked with the preprocessing workflow required to prepare CT-derived NIfTI da
 - voxel spacing and physical-coordinate awareness
 - alignment between the prepared NIfTI, exported STL surfaces, and the solver domain
 
-I did **not** develop the complete preprocessing GUI from scratch. My role required understanding and working with the existing preprocessing environment so that downstream boundary extraction remained coordinate-consistent.
+I did not develop the complete preprocessing GUI from scratch. My role required understanding and working with the existing preprocessing environment so that downstream boundary extraction remained coordinate-consistent.
 
 ### Directional boundary-surface extraction
 
@@ -83,17 +83,17 @@ The validation approach included checking:
 - intended direction
 - downstream solver intersection
 
-The key engineering idea was that a surface that merely looks correct is not sufficient; the geometry also needs to be consistent with the NIfTI coordinate system and usable by the simulation.
+The key engineering requirement was that the exported geometry remain consistent with the NIfTI coordinate system and usable by the downstream simulation workflow.
 
 ### Software collaboration
 
 I worked within an existing collaborative software environment and contributed through Git/GitLab branches rather than developing the complete research codebase independently.
 
-## What I Did Not Claim
+## Scope Boundaries
 
-The original project contained significant work outside my individual contribution.
+The original project contained substantial work outside my individual contribution.
 
-I do **not** claim to have developed:
+This repository does not claim that I developed:
 
 - the complete CT-analysis GUI
 - the complete raw-CT correction workflow
@@ -103,13 +103,13 @@ I do **not** claim to have developed:
 - the full C++ simulation system
 - the complete end-to-end university research codebase
 
-Those components formed part of the broader collaborative project.
+Those components belonged to the broader collaborative project.
 
 ## Independent Portfolio Reconstruction
 
 This public repository was rebuilt independently to demonstrate and strengthen the concepts related to my original contribution.
 
-The portfolio implementation adds several components that should be understood as **new portfolio engineering work**, not necessarily one-to-one reproductions of what I implemented during the university project.
+The portfolio implementation adds several components that are **new portfolio engineering work** rather than one-to-one reproductions of what I implemented during the university project.
 
 ### Portfolio-specific additions
 
@@ -150,13 +150,3 @@ The reconstruction includes:
 | Geometry checks | `src/ct_pipeline/validation.py` |
 | Diagnostic figures | `src/ct_pipeline/visualization.py` |
 | Public reproducible demonstration | `examples/07_full_synthetic_pipeline.py` |
-
-## One-Sentence Interview Summary
-
-> In the original collaborative project, I worked mainly on the CT/NIfTI-to-simulation handover: understanding preprocessing and coordinate consistency, extracting directional boundary-condition surfaces from voxel data, exporting them as STL markers, and supporting metadata and validation for downstream simulation; this GitHub repository independently rebuilds those ideas in a smaller, tested Python package.
-
-## Short Interview Version
-
-If asked, "What did you personally do?", a concise answer is:
-
-> My contribution was mainly between the CT data and the solver. I worked with the NIfTI preprocessing workflow, had to keep voxel and physical coordinates consistent, and developed the logic for selecting a local directional surface from the CT volume and exporting it as an STL boundary marker. I also worked on the metadata/JSON handover and validation inside the existing research software workflow. I did not develop the complete fracture solver or the entire GUI. The GitHub project is my independent reconstruction of that part, with additional tests and reproducible examples.

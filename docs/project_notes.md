@@ -13,7 +13,7 @@ The reconstruction was designed to:
 - use a synthetic reference case with known spatial metadata
 - keep the implementation modular and testable
 - preserve the distinction between the original collaborative university project and this public portfolio implementation
-- produce code that can be explained clearly in a technical interview
+- produce code whose engineering decisions can be reviewed and explained clearly
 
 ## Development Record
 
