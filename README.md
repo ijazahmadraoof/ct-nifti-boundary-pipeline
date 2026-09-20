@@ -1,130 +1,132 @@
-# CT-NIfTI Boundary Pipeline
+# CT NIfTI Boundary Pipeline
 
-A Python-based portfolio implementation for extracting simulation-ready
-boundary-condition surfaces from CT-derived NIfTI volumes.
+A reproducible Python pipeline for extracting physically meaningful
+boundary surfaces from CT-derived NIfTI volumes and exporting them as
+STL geometry.
 
 ## Overview
 
-Numerical analysis of CT-derived engineering specimens requires more than the
-voxel geometry itself. Loads and supports must be associated with well-defined
-physical surfaces while preserving consistency between voxel coordinates,
-physical coordinates, exported geometry, and the downstream simulation domain.
+This project demonstrates an end-to-end workflow:
 
-This project reconstructs a focused workflow for:
+**CT volume → preprocessing → segmentation → boundary selection →
+physical surface reconstruction → STL export → validation**
 
-- loading CT-derived NIfTI volumes
-- preparing image volumes for numerical-analysis workflows
-- handling voxel-to-physical coordinate transformations
-- selecting local regions of interest
-- identifying exposed material surfaces
-- exporting selected boundary surfaces as STL geometry
-- generating metadata for simulation handover
-- validating geometric and coordinate consistency
+## Features
 
-## Project Context
-
-This repository is an **independent portfolio reconstruction** inspired by my
-contribution to a collaborative 12-ECTS Digital Engineering research project at
-Bauhaus-Universität Weimar:
-
-**Development of an Image-to-Analysis Pipeline for the Modeling of Fracture Processes**
-
-The original research project investigated an end-to-end workflow connecting
-CT-derived specimen geometry with Finite Cell Method (FCM) and phase-field
-fracture simulations.
-
-The original project involved multiple contributors and an existing research
-software environment. This repository does **not** reproduce or claim ownership
-of the complete university research codebase.
-
-## My Contribution to the Original Project
-
-My work focused primarily on the interface between CT-derived image data and
-simulation-ready inputs.
-
-This included:
-
-- working with CT/NIfTI preprocessing workflows such as cropping and reorientation
-- understanding and maintaining consistency between voxel indices and physical coordinates
-- developing NIfTI-based boundary-condition surface extraction
-- converting exposed voxel faces into simulation-ready STL surfaces
-- supporting metadata and JSON-based simulation handover
-- integrating and validating the workflow within an existing research software environment
-- working collaboratively with Git/GitLab branches and an existing codebase
+-   NIfTI volume loading and inspection
+-   Affine-aware voxel-to-physical coordinate transformations
+-   Canonical RAS reorientation
+-   CT intensity segmentation using Otsu thresholding
+-   Directional boundary patch extraction
+-   Voxel-face based surface reconstruction
+-   STL export
+-   JSON metadata generation
+-   Automated geometry validation
 
 ## Workflow
 
-```text
-CT-derived volume
-        │
-        ▼
-NIfTI preprocessing
-        │
-        ▼
-Coordinate handling
-        │
-        ▼
-Region-of-interest selection
-        │
-        ▼
-Boundary surface extraction
-        │
-        ▼
-STL + metadata export
-        │
-        ▼
-Simulation-ready inputs
-```
-
-## Portfolio Implementation
-
-The public implementation is being rebuilt independently using synthetic or
-publicly shareable data.
-
-The goal is to demonstrate the underlying engineering and software concepts
-without distributing private research datasets or reproducing the complete
-original university codebase.
-
-Planned components include:
-
-- synthetic NIfTI specimen generation
-- preprocessing utilities
-- voxel/physical coordinate transformations
-- directional boundary extraction
-- STL export
-- metadata export
-- visualization
-- automated validation tests
+    CT NIfTI Volume
+            |
+            v
+    Volume Inspection
+            |
+            v
+    Preprocessing
+            |
+            v
+    Segmentation
+            |
+            v
+    Boundary Selection
+            |
+            v
+    Surface Reconstruction
+            |
+            v
+    STL Export
+            |
+            v
+    Validation
 
 ## Repository Structure
 
-```text
-ct-nifti-boundary-pipeline/
-├── docs/
-├── examples/
-├── notebooks/
-├── results/
-├── src/
-│   └── ct_pipeline/
-├── tests/
-├── .gitignore
-├── ATTRIBUTION.md
-├── README.md
-└── requirements.txt
+    examples/
+    src/ct_pipeline/
+    tests/
+    docs/
+    results/
+    requirements.txt
+    pyproject.toml
+
+## Installation
+
+``` bash
+git clone https://github.com/ijazahmadraoof/ct-nifti-boundary-pipeline.git
+cd ct-nifti-boundary-pipeline
+python -m venv .venv
 ```
 
-## Status
+Activate environment:
 
-🚧 **Under active development**
+``` powershell
+.\.venv\Scripts\Activate.ps1
+```
 
-The original academic project is complete. This repository is a clean,
-independent portfolio reconstruction intended to demonstrate and strengthen the
-technical skills developed during that work.
+Install dependencies:
 
-## License and Attribution
+``` bash
+pip install -r requirements.txt
+```
 
-See `ATTRIBUTION.md` for information about the original academic project and
-the scope of this reconstruction.
+## Demo
 
-A software license for the independently written portfolio implementation will
-be added once the first reusable code modules are finalized.
+Run:
+
+``` bash
+python examples/01_inspect_nifti.py
+python examples/03_crop_and_reorient.py
+python examples/05_segment_real_cube.py
+python examples/06_select_real_boundary_patch.py
+```
+
+Outputs include:
+
+-   boundary visualization
+-   STL surface file
+-   extraction metadata JSON
+
+## Testing
+
+Run:
+
+``` bash
+pytest -v
+```
+
+The test suite covers coordinate transformations, preprocessing,
+segmentation, surface generation, STL export, and validation.
+
+## Technologies
+
+-   Python
+-   NumPy
+-   SciPy
+-   NiBabel
+-   Matplotlib
+-   PyTest
+
+## Skills Demonstrated
+
+-   Scientific Python programming
+-   CT image processing
+-   Computational geometry
+-   Coordinate systems
+-   Simulation preprocessing
+-   Reproducible engineering workflows
+
+## Author
+
+Ijaz Ahmad Raoof
+
+Master's Student in Digital Engineering\
+Bauhaus University Weimar
