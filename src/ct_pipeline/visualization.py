@@ -201,3 +201,104 @@ def save_segmentation_slices(
     plt.close(fig)
 
     return output_path
+
+def save_boundary_overlay(
+    image: nib.Nifti1Image,
+    boundary_mask: np.ndarray,
+    direction: str,
+    output_path: str | Path,
+    title: str = "Selected boundary patch",
+) -> Path:
+    """
+    Visualize a selected directional boundary patch on its extreme image plane.
+    """
+    if boundary_mask.shape != image.shape:
+        raise ValueError(
+            "Boundary mask must have the same shape as the image."
+        )
+
+    direction_map = {
+        "+X": (0, 1),
+        "-X": (0, -1),
+        "+Y": (1, 1),
+        "-Y": (1, -1),
+        "+Z": (2, 1),
+        "-Z": (2, -1),
+    }
+
+    if direction not in direction_map:
+        raise ValueError(f"Unsupported direction: {direction}")
+
+    indices = np.argwhere(boundary_mask)
+
+    if len(indices) == 0:
+        raise ValueError("Boundary mask contains no selected voxels.")
+
+    axis_index, step = direction_map[direction]
+
+    positions = indices[:, axis_index]
+
+    if step > 0:
+        plane_index = int(positions.max())
+    else:
+        plane_index = int(positions.min())
+
+    data = np.asarray(image.dataobj)
+
+    intensity_slice = np.take(
+        data,
+        plane_index,
+        axis=axis_index,
+    ).T
+
+    boundary_slice = np.take(
+        boundary_mask,
+        plane_index,
+        axis=axis_index,
+    ).T
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    fig, axis = plt.subplots(
+        figsize=(7, 7)
+    )
+
+    axis.imshow(
+        intensity_slice,
+        cmap="gray",
+        origin="lower",
+    )
+
+    overlay = np.ma.masked_where(
+        ~boundary_slice,
+        boundary_slice,
+    )
+
+    axis.imshow(
+        overlay,
+        origin="lower",
+        alpha=0.45,
+    )
+
+    axis.set_title(
+        f"{title}\n"
+        f"{direction} boundary, plane index {plane_index}"
+    )
+    axis.set_xlabel("voxel index")
+    axis.set_ylabel("voxel index")
+
+    fig.tight_layout()
+
+    fig.savefig(
+        output_path,
+        dpi=180,
+        bbox_inches="tight",
+    )
+
+    plt.close(fig)
+
+    return output_path
